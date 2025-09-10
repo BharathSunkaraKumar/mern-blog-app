@@ -1,17 +1,23 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
-import { fetchPostById } from '../features/posts/postsSlice'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { deletePost, fetchPostById } from '../features/posts/postsSlice'
 
 const SinglePost = () => {
     const {id} = useParams()
+    const {user} = useSelector((state) => state.auth)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const {singlePost, loading, error} = useSelector((state) => state.posts)
 
     useEffect(() => {
         dispatch(fetchPostById(id))
     }, [dispatch, id])
-    console.log(singlePost)
+
+    const handleDelete = () => {
+        dispatch(deletePost(singlePost._id))
+        navigate('/')
+    }
     
     if(loading) return <p>:oading...</p>
     if(error) return <p>error; {error}</p>
@@ -24,6 +30,16 @@ const SinglePost = () => {
         <div className='flex flex-col gap-3'>
             <h1 className='text-3xl font-bold'>{singlePost.title}</h1>
             <h3 className='text-xl font-semibold text-gray-500'>{singlePost.content}</h3>
+        </div>
+        <div>
+            {
+            user && user.id === singlePost.author?._id && (
+                <div className='flex flex-col md:flex-row gap-3'>
+                    <button onClick={()=>navigate(`/editpost/${singlePost._id}`)} className='bg-blue-600 px-4 py-2 rounded-lg hover:bg-blue-700'>Edit</button>
+                    <button onClick={handleDelete} className='bg-orange-600 px-4 py-2 rounded-lg hover:bg-orange-700'>Delete</button>
+                </div>
+            )
+        }
         </div>
         <div>
             <Link to='/' className='text-blue-500 hover:text-blue-800 font-mono hover:underline'>Back to All Posts</Link>

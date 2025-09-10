@@ -7,6 +7,7 @@ import { CreatePost } from './pages/CreatePost'
 import ProtectedRoute from './components/ProtectedRoute'
 import Navbar from './components/Navbar'
 import SinglePost from './pages/SinglePost'
+import EditPost from './pages/EditPost'
 
 const App = () => {
   return (
@@ -23,9 +24,11 @@ const App = () => {
         <Route path='/posts/:id' element={<SinglePost/>} />
         
         <Route path='/create' element={
-          <ProtectedRoute>
+          
             <CreatePost/>
-          </ProtectedRoute>
+        } />
+        <Route path='/editpost/:id' element={
+          <EditPost/>
         } />
       </Routes>
       </div>

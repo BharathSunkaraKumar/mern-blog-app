@@ -18,14 +18,13 @@ const PostsList = () => {
     }, [dispatch])
     if(loading) return <p>Loading...</p>
     if(error) return <p>Error: {error}</p>
-    console.log(posts)
   return (
     <div className='px-5 min-h-screen'>
         <div className='mt-5 flex flex-col gap-5'>
             {
                 posts.map((post) => (
-                    <Link to={`/posts/${post._id}`}>
-                    <div key={post._id} className='border rounded-xl p-3 shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-2'>
+                    <Link  key={post._id} to={`/posts/${post._id}`}>
+                    <div className='border rounded-xl p-3 shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-2'>
                         <div className=''>
                             <div>
                                 <div className='flex items-center gap-1'>
@@ -52,12 +51,12 @@ const PostsList = () => {
                                     <FaComment className='text-gray-500 size-3.5'/>
                                     <p>Comment</p>
                                 </div>
-                                <Link to={`/posts/${post._id}`} className='flex items-center gap-1'>
+                                <div to={`/posts/${post._id}`} className='flex items-center gap-1'>
                                     <>
                                         <MdOutlineReadMore />
                                         <p className='text-gray-400 hover:text-gray-500'>Read More...</p>
                                     </>
-                                </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
