@@ -2,12 +2,12 @@ import {BrowserRouter as Router, Routes, Route, Outlet} from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import PostDetail from './pages/PostDetail'
 import { CreatePost } from './pages/CreatePost'
 import ProtectedRoute from './components/ProtectedRoute'
 import Navbar from './components/Navbar'
 import SinglePost from './pages/SinglePost'
 import EditPost from './pages/EditPost'
+import MyPosts from './pages/MyPosts'
 
 const App = () => {
   return (
@@ -22,7 +22,7 @@ const App = () => {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/posts/:id' element={<SinglePost/>} />
-        
+        <Route path='/myposts' element={<MyPosts/>}/>
         <Route path='/create' element={
           
             <CreatePost/>

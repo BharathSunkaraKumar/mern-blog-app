@@ -4,6 +4,8 @@ import { use, useState } from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import { logout } from "../features/auth/authSlice";
 import blog from './logo.svg'
+import { IoCreate } from "react-icons/io5";
+
 
 const Navbar = () => {
   const[toggle, setToggle] = useState(false)
@@ -25,15 +27,20 @@ const Navbar = () => {
     <nav className="flex justify-between h-[55px] items-center bg-white w-full px-10 shadow-md sticky top-0 z-10">
         <div>
             <Link to='/'>
-              <img className="w-6" src={blog} alt="logo"/>
+              <img className="w-6 hover:bg-blue-500" src={blog} alt="logo"/>
             </Link>
         </div>
         <div>
-          <p className="font-semibold text-xl text-sky-700">{user?.user.username}</p>
+          <p className="font-semibold text-xl text-sky-700">User: {user?.user.username}</p>
         </div>
         <div className="hidden md:flex space-x-5">
             
-          <Link className="hover:bg-blue-100 p-2 rounded-md" to="/create">Create</Link>
+          <Link className="hover:bg-blue-100 p-2 rounded-md" to="/create">
+          <div className="flex items-center">
+            <IoCreate className="text-blue-700"/>
+          <span>Create Post</span>
+          </div>
+          </Link>
             {
               user ? (
                 <Link onClick={handleLogout} className="hover:bg-red-100 p-2 rounded-md" to="/register">logout</Link>
@@ -52,7 +59,12 @@ const Navbar = () => {
           {
             toggle && (
               <div className="flex flex-col absolute right-1 top-10 gap-3 bg-black text-white p-3 rounded-lg shadow-gray-300 shadow-lg">
-                <Link onClick={handleToggle} className="hover:bg-blue-700 rounded-md px-2 py-1" to="/create">Create Post</Link>
+                <Link onClick={handleToggle} className="hover:bg-blue-200 rounded-md px-2 py-1" to="/create">
+                <div className="flex items-center gap-2">
+                  <IoCreate className="text-blue-700"/>
+                  <span className="text-blue-700">Create Post</span>
+                </div>
+                </Link>
                 {
               user ? (
                 <Link onClick={handleLogout} className="hover:bg-red-700 rounded-md px-2 py-1" to="/register">logout</Link>

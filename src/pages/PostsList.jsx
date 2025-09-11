@@ -7,20 +7,33 @@ import { FaComment } from "react-icons/fa6";
 import { AiOutlineLike } from "react-icons/ai";
 import { MdVerified } from "react-icons/md";
 import { MdOutlineReadMore } from "react-icons/md";
+import Loading from '../components/Loading';
+import { IoMdList } from "react-icons/io";
+
 
 
 const PostsList = () => {
     const dispatch = useDispatch()
+    const {user} = useSelector((state) => state.auth)
     const {posts, loading, error} = useSelector((state) => state.posts)
-
+    // console.log(posts[5]?.author._id)
+    // console.log(user.user.id)
+    // console.log(posts)
+    
     useEffect(() => {
         dispatch(fetchPosts())
     }, [dispatch])
-    if(loading) return <p>Loading...</p>
+    if(loading) return <Loading/>
     if(error) return <p>Error: {error}</p>
   return (
     <div className='px-5 min-h-screen'>
         <div className='mt-5 flex flex-col gap-5'>
+            <div className='ml-1'>
+                <Link to='/myposts'>
+                
+                <button className='flex items-center bg-white border-2 border-blue-500 px-4 py-1 rounded-md hover:bg-blue-500 hover:text-white'><IoMdList/> My Posts</button>
+                </Link>
+            </div>
             {
                 posts.map((post) => (
                     <Link  key={post._id} to={`/posts/${post._id}`}>
@@ -32,14 +45,19 @@ const PostsList = () => {
                                     <p className='text-gray-600 font-mono'>{post.author.username}</p>
                                     <MdVerified className='text-yellow-500'/>
                                 </div>
-                                <div className='flex justify-between items-center mt-2'>
-                                    <div className='flex flex-col gap-2 mt-2 mb-2'>
+                                <p className="text-xs text-gray-500">
+                                    Posted on {new Date(post.createdAt).toLocaleString()}
+                                </p>
+                                
+                                <div className='mt-5'>
+                                        <div className='flex flex-col gap-2'>
+                                            <div style={{width:160, height: 107}}>
+                                            <img className=' h-20 w-full object-cover rounded-md' src={post.image} alt={post.title} />
+                                        </div>
                                         <h1 className='font-bold text-3xl'>{post.title}</h1>
                                         <h3 className='font-semibold text-xl text-gray-500 w-[50%] line-clamp-1'>{post.content}</h3>
                                     </div>
-                                    <div>
-                                        <img className=' h-20 object-cover w-[250px] rounded-md' src={post.image} alt={post.title} />
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <div className='flex items-center gap-3 mt-2'>
@@ -59,7 +77,9 @@ const PostsList = () => {
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
+                    
                     </Link>
                 ))
             }

@@ -1,6 +1,6 @@
 
 
-const api = 'http://localhost:8000/api/auth/'
+const api = 'https://myblog-r8m3.onrender.com/api/auth/'
 
 const register = async(userData) => {
     const res = await fetch(`${api}register`, {
